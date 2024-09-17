@@ -10,6 +10,27 @@ on:
       - master
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint Code
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          lfs: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install Dependencies
+        run: |
+          npm install -g htmlhint stylelint
+          npm install
+      - name: Run HTML Hint
+        run: htmlhint '**/*.html'
+      - name: Run Stylelint
+        run: stylelint '**/*.css'
+        
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
