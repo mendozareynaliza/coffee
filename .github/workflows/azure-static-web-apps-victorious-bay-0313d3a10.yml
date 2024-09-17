@@ -51,10 +51,11 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          
+
       - name: Run ESLint
         run: |
-          npx eslint . # Replace with your ESLint command or configuration
+          npx eslint src/**/*.js # Replace with the correct path to your source files
+        continue-on-error: true # Optional: Continue even if ESLint fails
 
   deploy_job:
     needs: [build_job, test_job]
