@@ -34,8 +34,33 @@ jobs:
           name: build-artifacts
           path: build_output/
 
-  deploy_job:
+  test_job:
     needs: build_job
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Test Job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          lfs: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Change to the version you need
+
+      - name: Install dependencies
+        run: |
+          npm install # Adjust if you're using yarn or another package manager
+
+      - name: Run tests
+        run: |
+          npm test # Adjust according to your test command
+
+  deploy_job:
+    needs: [build_job, test_job]
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Deploy Job
