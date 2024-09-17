@@ -10,30 +10,8 @@ on:
       - master
 
 jobs:
-  test_job:
-    runs-on: ubuntu-latest
-    name: Run Tests
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-          lfs: false
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-      - name: Install dependencies
-        run: npm install
-        working-directory: ./subdirectory
-      - name: Run tests
-        run: npm test
-        working-directory: ./subdirectory
-        env:
-          CI: true
-
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    needs: test_job
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
@@ -41,14 +19,46 @@ jobs:
         with:
           submodules: true
           lfs: false
+
+      # Ensure the directory where package.json is located is correct
+      - name: Install Dependencies
+        working-directory: path/to/directory  # Adjust this path
+        run: npm install
+
+      - name: Run Tests
+        working-directory: path/to/directory  # Adjust this path
+        run: npm test
+
+      - name: Run Linter
+        working-directory: path/to/directory  # Adjust this path
+        run: npm run lint
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_VICTORIOUS_BAY_0313D3A10 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/"
+          app_location: "path/to/app"  # Adjust to the app directory if needed
           api_location: ""
           output_location: "."
-          skip_deploy_on_missing_secrets: true # Optional: Skip
+
+      - name: Send Slack Notification
+        uses: slackapi/slack-github-action@v1
+        with:
+          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          text: 'Deployment was successful!'
+
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_VICTORIOUS_BAY_0313D3A10 }}
+          action: "close"
