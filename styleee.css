@@ -582,7 +582,7 @@ input[type="submit"]:hover {
   padding: 20px;
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)),
     url("./Struct4.jpg") center/cover no-repeat;
-  position: relative;
+  position: center;
   background-attachment: fixed;
 }
 
