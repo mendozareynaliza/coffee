@@ -933,12 +933,11 @@ fieldset{ margin: 0; padding: 0; }
 .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
 
 .opening-container {
-  position: relative;
+  position: center;
   text-align: left;
   color: white;
   overflow: hidden;
   border-radius: 1rem;
-  margin-left: 10px;
 }
 
 .opening-container img{
