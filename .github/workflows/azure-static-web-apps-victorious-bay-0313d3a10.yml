@@ -44,10 +44,12 @@ jobs:
           app_location: "/"
           api_location: ""
           output_location: "."
-      - name: Notify Deployment Success
-        uses: some/notification-action@v1
+      - name: Send Slack Notification
+        uses: slackapi/slack-github-action@v1
         with:
-          message: 'Deployment was successful!'
+          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          text: 'Deployment was successful!'
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
