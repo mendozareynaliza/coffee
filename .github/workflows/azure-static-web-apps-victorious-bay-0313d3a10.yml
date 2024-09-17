@@ -23,9 +23,10 @@ jobs:
 
       - name: Build the app
         run: |
-          # Replace with your actual build commands
+          # Replace with actual build commands for your app
           echo "Building the app"
           mkdir -p build_output
+          # Example placeholder command; replace with your build command
           echo "Build output" > build_output/index.html
           
       - name: Upload build artifacts
@@ -77,7 +78,7 @@ jobs:
           action: "upload"
           app_location: "/" # Adjust if your app’s source code is in a subdirectory
           api_location: "" # API source code path - optional, leave empty if not using an API.
-          output_location: "build_output" # This should match the directory where your build output is stored
+          output_location: "." # This should match the directory where your build output is stored
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
