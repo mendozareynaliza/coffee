@@ -954,7 +954,7 @@ fieldset{ margin: 0; padding: 0; }
 
 .opening-text{
   position: absolute;
-  top: 40%;
+  top: 60%;
   left: 30%;
   transform: translate(-50%, -50%);
 }
