@@ -27,7 +27,7 @@ jobs:
           echo "Building the application..."
           # Add your custom build commands here if needed
           # Example: custom build steps or scripts
-          
+
   deploy_job:
     needs: build_job
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
