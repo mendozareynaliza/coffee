@@ -25,8 +25,10 @@ jobs:
         run: |
           echo "Building the app"
           mkdir -p build_output
-      
-          
+
+      - name: List build output
+        run: ls -R build_output/
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -50,11 +52,11 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          
+
       - name: Run ESLint
         run: |
-          npx eslint src/**/*.js 
-        continue-on-error: true 
+          npx eslint src/**/*.js
+        continue-on-error: true
 
   deploy_job:
     needs: [build_job, test_job]
@@ -74,6 +76,6 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_VICTORIOUS_BAY_0313D3A10 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/" 
-          api_location: "" 
-          output_location: "build_output"  # Adjusted to reflect the directory where the build output is located
+          app_location: "/"
+          api_location: ""
+          output_location: "build_output"
