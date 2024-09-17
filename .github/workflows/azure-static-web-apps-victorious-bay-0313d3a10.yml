@@ -28,15 +28,12 @@ jobs:
           # For example, if using npm:
           npm install
           npm run build
-        # Optionally, you can define output artifacts here
-        # e.g., saving built files to an artifact for the deploy job
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
           name: build-output
           path: |
-            # Path to the directory where your build outputs are stored
             ./build
 
   deploy_job:
@@ -45,12 +42,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy Job
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          submodules: true
-          lfs: false
-
       - name: Download build artifact
         uses: actions/download-artifact@v3
         with:
