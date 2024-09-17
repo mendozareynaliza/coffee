@@ -934,7 +934,7 @@ fieldset{ margin: 0; padding: 0; }
 
 .opening-container {
   position: relative;
-  text-align: left;
+  text-align: center;
   color: white;
   overflow: hidden;
   border-radius: 1rem;
