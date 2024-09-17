@@ -29,23 +29,35 @@ jobs:
           npm install
           npm run build
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-output
-          path: |
-            ./build
-
-  deploy_job:
+  test_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     needs: build_job
     runs-on: ubuntu-latest
+    name: Test Job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          lfs: false
+
+      - name: Run tests
+        run: |
+          # Add your test commands here
+          # For example, if using npm:
+          npm test
+
+  deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    needs: test_job
+    runs-on: ubuntu-latest
     name: Deploy Job
     steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
         with:
-          name: build-output
+          submodules: true
+          lfs: false
 
       - name: Deploy to Azure
         id: deploy
