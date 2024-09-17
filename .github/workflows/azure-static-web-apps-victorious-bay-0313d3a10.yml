@@ -21,21 +21,13 @@ jobs:
           submodules: true
           lfs: false
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16' # Specify the Node.js version you need
-
-      - name: Install dependencies
-        run: npm install
-
       - name: Build the app
         run: |
           # Replace with actual build commands
           echo "Building the app"
           mkdir -p build_output
           echo "Build output" > build_output/index.html
-
+          
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -50,24 +42,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          submodules: true
-          lfs: false
 
-      - name: Set up Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '14' # Replace with your Node.js version
 
       - name: Install dependencies
-        run: npm install
-
+        run: |
+          npm install
+          
       - name: Run ESLint
-        run: npm run lint
-        # Assuming you have a lint script defined in your package.json
+        run: |
+          npx eslint . # Replace with your ESLint command or configuration
 
   deploy_job:
-    needs: test_job
+    needs: [build_job, test_job]
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Deploy Job
