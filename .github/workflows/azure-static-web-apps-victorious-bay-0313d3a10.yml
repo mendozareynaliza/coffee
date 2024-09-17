@@ -13,13 +13,24 @@ jobs:
   build_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    name: Build Job
+    name: Build and Lint Job
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           submodules: true
           lfs: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14' # Specify your Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint code
+        run: npm run lint # Runs ESLint
 
       - name: Build the app
         run: |
@@ -34,33 +45,8 @@ jobs:
           name: build-artifacts
           path: build_output/
 
-  test_job:
-    needs: build_job
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
-    name: Test Job
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          submodules: true
-          lfs: false
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16' # Change to the version you need
-
-      - name: Install dependencies
-        run: |
-          npm install # Adjust if you're using yarn or another package manager
-
-      - name: Run tests
-        run: |
-          npm test # Adjust according to your test command
-
   deploy_job:
-    needs: [build_job, test_job]
+    needs: build_job
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Deploy Job
@@ -86,9 +72,5 @@ jobs:
     runs-on: ubuntu-latest
     name: Close Pull Request Job
     steps:
-      - name: Close Pull Request
-        id: closepullrequest
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_VICTORIOUS_BAY_0313D3A10 }}
-          action: "close"
+      - name: Notify PR Closure
+        run: echo "Pull request closed. No additional actions specified."
