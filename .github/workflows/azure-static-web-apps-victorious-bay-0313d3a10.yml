@@ -22,10 +22,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '14' # Use the Node.js version that matches your project requirements
+      - name: List directory contents
+        run: ls -R
       - name: Install dependencies
         run: npm install
+        working-directory: ./subdirectory # Update this if your package.json is in a subdirectory
       - name: Run tests
         run: npm test
+        working-directory: ./subdirectory # Update this if your package.json is in a subdirectory
         env:
           CI: true # Ensures that test scripts run in CI mode
 
@@ -47,7 +51,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "/" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "." # Built app content directory - optional
