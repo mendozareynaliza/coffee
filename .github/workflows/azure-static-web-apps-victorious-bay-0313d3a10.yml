@@ -23,7 +23,7 @@ jobs:
 
       - name: Build the app
         run: |
-          # Replace with actual build commands
+          # Replace with your actual build commands
           echo "Building the app"
           mkdir -p build_output
           echo "Build output" > build_output/index.html
@@ -75,9 +75,9 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_VICTORIOUS_BAY_0313D3A10 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/" # This should be the root of the repo or where your app’s source code is located.
+          app_location: "/" # Adjust if your app’s source code is in a subdirectory
           api_location: "" # API source code path - optional, leave empty if not using an API.
-          output_location: "build_output" # This should match the directory where the build output is stored.
+          output_location: "build_output" # This should match the directory where your build output is stored
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
