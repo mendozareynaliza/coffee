@@ -22,10 +22,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - name: Install Dependencies
+      - name: Install HTML Hint and Stylelint
         run: |
           npm install -g htmlhint stylelint
-          npm install
       - name: Run HTML Hint
         run: htmlhint '**/*.html'
       - name: Run Stylelint
