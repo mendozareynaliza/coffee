@@ -23,11 +23,9 @@ jobs:
 
       - name: Build the app
         run: |
-          # Replace with actual build commands for your app
           echo "Building the app"
           mkdir -p build_output
-          # Example placeholder command; replace with your build command
-          echo "Build output" > build_output/index.html
+          echo "." > build_output/index.html
           
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
@@ -55,8 +53,8 @@ jobs:
           
       - name: Run ESLint
         run: |
-          npx eslint src/**/*.js # Replace with the correct path to your source files
-        continue-on-error: true # Optional: Continue even if ESLint fails
+          npx eslint src/**/*.js 
+        continue-on-error: true 
 
   deploy_job:
     needs: [build_job, test_job]
