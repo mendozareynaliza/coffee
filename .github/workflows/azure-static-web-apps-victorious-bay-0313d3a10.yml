@@ -21,12 +21,12 @@ jobs:
           submodules: true
           lfs: false
 
-      - name: Build
+      - name: Build Application
         id: build
         run: |
-          # Add build commands here
           echo "Building the application..."
-          # Example command: npm install && npm run build
+          # Add your custom build commands here if needed
+          # Example: custom build steps or scripts
           
   deploy_job:
     needs: build_job
