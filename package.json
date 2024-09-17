@@ -1,24 +1,24 @@
 {
-  "name": "coffee",                // Name of your project
-  "version": "1.0.0",              // Version of your project
-  "description": "A sample Node.js application", // Description of your project
-  "main": "index.js",              // Main entry point of your application
+  "name": "coffee",                
+  "version": "1.0.0",              
+  "description": "A sample Node.js application", 
+  "main": "index.js",              
   "scripts": {
-    "start": "node index.js",     // Command to start your application
-    "build": "npm run build",     // Build command (can be customized)
-    "test": "jest",               // Command to run tests using Jest
-    "lint": "eslint .",           // Command to lint your code (optional)
-    "prebuild": "echo 'Pre-build step'" // Optional step before the build
+    "start": "node index.js",    
+    "build": "npm run build",     
+    "test": "jest",              
+    "lint": "eslint .",           
+    "prebuild": "echo 'Pre-build step'" 
   },
-  "author": "mendozareynaliza",           // Author of the project
-  "license": "MIT",                // License of the project
+  "author": "mendozareynaliza",           
+  "license": "MIT",               
   "dependencies": {
-    "express": "^4.17.1"          // Example runtime dependency
+    "express": "^4.17.1"          
   },
   "devDependencies": {
-    "jest": "^29.0.0",            // Example development dependency for testing
-    "eslint": "^8.0.0",           // Example development dependency for linting
-    "webpack": "^5.0.0"           // Example build tool
+    "jest": "^29.0.0",            
+    "eslint": "^8.0.0",          
+    "webpack": "^5.0.0"         
   }
 }
 
