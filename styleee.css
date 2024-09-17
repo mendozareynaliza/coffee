@@ -944,7 +944,6 @@ fieldset{ margin: 0; padding: 0; }
   border-radius: 1rem;
   opacity: 0.6;
   transition: 1s;
-  align-content: top;
 }
 
 .opening-container img:hover{
@@ -955,7 +954,7 @@ fieldset{ margin: 0; padding: 0; }
 
 .opening-text{
   position: absolute;
-  top: 60%;
+  top: 45%;
   left: 30%;
   transform: translate(-50%, -50%);
 }
