@@ -25,7 +25,7 @@ jobs:
         run: |
           echo "Building the app"
           mkdir -p build_output
-          echo "." > build_output/index.html
+          echo "be8058bcd74848ca96de6621fbdbe2226763e4d1d67423a061569b046ec9b1ad5-c8e4e0b3-43ed-4467-a5a7-9af7f8065805010551555" > build_output/index.html
           
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
