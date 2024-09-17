@@ -934,10 +934,11 @@ fieldset{ margin: 0; padding: 0; }
 
 .opening-container {
   position: relative;
-  text-align: center;
+  text-align: left;
   color: white;
   overflow: hidden;
   border-radius: 1rem;
+  margin-left: 10px;
 }
 
 .opening-container img{
