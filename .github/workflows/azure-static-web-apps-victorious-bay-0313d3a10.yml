@@ -21,45 +21,30 @@ jobs:
           submodules: true
           lfs: false
 
-      - name: Build
-        id: build
+      - name: Build the app
         run: |
           # Add your build commands here
-          # For example, if using npm:
-          npm install
-          npm run build
+          echo "Building the app"
+        id: build
 
-  test_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    needs: build_job
-    runs-on: ubuntu-latest
-    name: Test Job
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
         with:
-          submodules: true
-          lfs: false
-
-      - name: Run tests
-        run: |
-          # Add your test commands here
-          # For example, if using npm:
-          npm test
+          name: build-artifacts
+          path: ./path-to-build-output # Update with your actual build output path
 
   deploy_job:
+    needs: build_job
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    needs: test_job
     runs-on: ubuntu-latest
     name: Deploy Job
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
         with:
-          submodules: true
-          lfs: false
+          name: build-artifacts
 
-      - name: Deploy to Azure
+      - name: Deploy to Azure Static Web Apps
         id: deploy
         uses: Azure/static-web-apps-deploy@v1
         with:
@@ -68,7 +53,7 @@ jobs:
           action: "upload"
           app_location: "/" # App source code path
           api_location: "" # API source code path - optional
-          output_location: "./build" # Adjust this to where the build outputs are located
+          output_location: "." # Built app content directory - optional
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
