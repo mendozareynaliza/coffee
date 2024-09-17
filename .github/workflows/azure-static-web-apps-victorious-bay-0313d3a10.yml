@@ -25,7 +25,7 @@ jobs:
         run: |
           echo "Building the app"
           mkdir -p build_output
-          echo "be8058bcd74848ca96de6621fbdbe2226763e4d1d67423a061569b046ec9b1ad5-c8e4e0b3-43ed-4467-a5a7-9af7f8065805010551555" > build_output/index.html
+          echo "<html><body><h1>Hello from Azure Static Web Apps!</h1></body></html>" > build_output/index.html 
           
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
@@ -76,17 +76,4 @@ jobs:
           action: "upload"
           app_location: "/" 
           api_location: "" 
-          output_location: "." 
-
-  close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    name: Close Pull Request Job
-    steps:
-      - name: Close Pull Request
-        run: |
-          curl -X PATCH \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d '{"state": "closed"}' \
-            "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}"
+          output_location: "build_output"  # Adjusted to reflect the directory where the build output is located
