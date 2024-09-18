@@ -5,18 +5,18 @@
   "main": "index.js",
   "scripts": {
     "start": "echo 'No start script defined for static sites'",
-    "build": "echo 'No build script defined for static sites'", // Placeholder for build command if needed
+    "build": "echo 'No build script defined for static sites'", 
     "test": "echo 'No test script defined for static sites'",
     "lint": "echo 'No lint script defined for static sites'",
-    "prebuild": "echo 'Pre-build step'" // Optional, if you need a pre-build step
+    "prebuild": "echo 'Pre-build step'" 
   },
   "author": "mendozareynaliza",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1" // Optional if not needed for static sites
+    "express": "^4.17.1" 
   },
   "devDependencies": {
-    "jest": "^29.0.0", // Optional if not needed for static sites
-    "eslint": "^8.0.0" // Optional if not needed for static sites
+    "jest": "^29.0.0",
+    "eslint": "^8.0.0" 
   }
 }
