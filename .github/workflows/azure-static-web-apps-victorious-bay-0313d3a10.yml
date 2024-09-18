@@ -10,30 +10,7 @@ on:
       - master
 
 jobs:
-  test_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
-    name: Test Job
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14' # Replace with your Node.js version
-
-      - name: Install dependencies
-        run: |
-          npm install
-
-      - name: Run ESLint
-        run: |
-          npx eslint src/**/*.js
-        continue-on-error: true
-
   build_job:
-    needs: test_job
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build Job
@@ -62,8 +39,31 @@ jobs:
       - name: List files in root
         run: ls -R # List files in the root to ensure the build output is as expected
 
+  test_job:
+    needs: build_job
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Test Job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14' # Replace with your Node.js version
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run ESLint
+        run: |
+          npx eslint src/**/*.js
+        continue-on-error: true
+
   deploy_job:
-    needs: [build_job]
+    needs: [test_job]
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Deploy Job
