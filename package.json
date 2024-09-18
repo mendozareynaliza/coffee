@@ -1,24 +1,22 @@
 {
-  "name": "coffee",                
-  "version": "1.0.0",              
-  "description": "A sample Node.js application", 
-  "main": "index.js",              
+  "name": "coffee",
+  "version": "1.0.0",
+  "description": "A sample static web application",
+  "main": "index.js",
   "scripts": {
-    "start": "node index.js",    
-    "build": "npm run build",     
-    "test": "jest",              
-    "lint": "eslint .",           
-    "prebuild": "echo 'Pre-build step'" 
+    "start": "echo 'No start script defined for static sites'",
+    "build": "echo 'No build script defined for static sites'", // Placeholder for build command if needed
+    "test": "echo 'No test script defined for static sites'",
+    "lint": "echo 'No lint script defined for static sites'",
+    "prebuild": "echo 'Pre-build step'" // Optional, if you need a pre-build step
   },
-  "author": "mendozareynaliza",           
-  "license": "MIT",               
+  "author": "mendozareynaliza",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"          
+    "express": "^4.17.1" // Optional if not needed for static sites
   },
   "devDependencies": {
-    "jest": "^29.0.0",            
-    "eslint": "^8.0.0",          
-    "webpack": "^5.0.0"         
+    "jest": "^29.0.0", // Optional if not needed for static sites
+    "eslint": "^8.0.0" // Optional if not needed for static sites
   }
 }
-
