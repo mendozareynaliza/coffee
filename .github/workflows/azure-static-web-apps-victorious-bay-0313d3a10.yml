@@ -24,18 +24,17 @@ jobs:
       - name: Build the app
         run: |
           echo "Building the app"
-          mkdir -p build_output
-          # Replace this with your actual build command
+          # You can adjust this command if you have any build steps; otherwise, you might not need this if files are in the root.
           npm run build
+          
+      - name: List files in root
+        run: ls -R
 
-      - name: List build output
-        run: ls -R build_output/
-      
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: build_output/
+          path: ./
 
   test_job:
     needs: build_job
@@ -49,7 +48,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '14' # Replace with your Node.js version
+          node-version: '14'
 
       - name: Install dependencies
         run: |
@@ -71,8 +70,8 @@ jobs:
         with:
           name: build-artifacts
 
-      - name: List downloaded artifacts
-        run: ls -R build_output/
+      - name: List downloaded files
+        run: ls -R
 
       - name: Deploy to Azure Static Web Apps
         id: deploy
@@ -81,5 +80,5 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_VICTORIOUS_BAY_0313D3A10 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/" 
-          output_location: "build_output"  # Adjust to match the directory where your built files are located
+          app_location: "/" # The location of your application code
+          output_location: "." # The root directory where index.html is located
